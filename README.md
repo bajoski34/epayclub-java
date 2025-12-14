@@ -72,7 +72,7 @@ CreateOrderRequest request = CreateOrderRequest.builder()
     .firstName("John")
     .lastName("Doe")
     .narration("Payment for Order #12345")
-    .redirectUrl("https://yoursite.com/callback")
+    .website("https://yoursite.com/callback")
     .build();
 
 CreateOrderResponse response = client.orders().create(request);

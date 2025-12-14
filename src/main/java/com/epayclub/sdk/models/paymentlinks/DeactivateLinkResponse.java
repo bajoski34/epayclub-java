@@ -20,7 +20,7 @@ public class DeactivateLinkResponse {
     private String message;
 
     @JsonProperty("data")
-    private PaymentLinkData data;
+    private CreateLinkResponse.Data data;
 
     public DeactivateLinkResponse() {
     }
@@ -57,11 +57,11 @@ public class DeactivateLinkResponse {
         this.message = message;
     }
 
-    public PaymentLinkData getData() {
+    public CreateLinkResponse.Data getData() {
         return data;
     }
 
-    public void setData(PaymentLinkData data) {
+    public void setData(CreateLinkResponse.Data data) {
         this.data = data;
     }
 }

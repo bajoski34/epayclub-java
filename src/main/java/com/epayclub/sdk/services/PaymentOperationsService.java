@@ -37,6 +37,6 @@ public class PaymentOperationsService {
      * @return the bank codes response
      */
     public BankCodesResponse bankCodes(RequestOptions options) {
-        return httpExecutor.get("/bank-codes", BankCodesResponse.class, options);
+        return httpExecutor.get("/checkout/banks", BankCodesResponse.class, options);
     }
 }

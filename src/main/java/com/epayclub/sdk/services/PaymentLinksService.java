@@ -40,7 +40,7 @@ public class PaymentLinksService {
      */
     public CreateLinkResponse create(CreateLinkRequest request, RequestOptions options) {
         request.validate();
-        return httpExecutor.post("/payment-links", request, CreateLinkResponse.class, options);
+        return httpExecutor.post("/checkout/links/create", request, CreateLinkResponse.class, options);
     }
 
     /**
@@ -61,7 +61,7 @@ public class PaymentLinksService {
      * @return the fetch links response
      */
     public FetchLinksResponse list(FetchLinksRequest request, RequestOptions options) {
-        String path = "/payment-links";
+        String path = "/checkout/links/all";
         if (request != null) {
             String queryString = request.toQueryString();
             if (!queryString.isEmpty()) {
@@ -87,7 +87,7 @@ public class PaymentLinksService {
      * @return the link types response
      */
     public LinkTypesResponse types(RequestOptions options) {
-        return httpExecutor.get("/payment-links/types", LinkTypesResponse.class, options);
+        return httpExecutor.get("/checkout/links/types", LinkTypesResponse.class, options);
     }
 
     /**
@@ -109,7 +109,7 @@ public class PaymentLinksService {
      */
     public EditLinkResponse edit(EditLinkRequest request, RequestOptions options) {
         request.validate();
-        return httpExecutor.patch("/payment-links/" + request.getLinkId(),
+        return httpExecutor.patch("/checkout/links/" + request.getLinkId() + "/edit",
                 request, EditLinkResponse.class, options);
     }
 
@@ -132,7 +132,7 @@ public class PaymentLinksService {
      */
     public ActivateLinkResponse activate(ActivateLinkRequest request, RequestOptions options) {
         request.validate();
-        return httpExecutor.post("/payment-links/" + request.getLinkId() + "/activate",
+        return httpExecutor.post("/checkout/links/" + request.getLinkId() + "/status/activate",
                 null, ActivateLinkResponse.class, options);
     }
 
@@ -155,7 +155,8 @@ public class PaymentLinksService {
      */
     public DeactivateLinkResponse deactivate(DeactivateLinkRequest request, RequestOptions options) {
         request.validate();
-        return httpExecutor.post("/payment-links/" + request.getLinkId() + "/deactivate",
+
+        return httpExecutor.post("/checkout/links/" + request.getLinkId() + "/status/disable",
                 null, DeactivateLinkResponse.class, options);
     }
 
@@ -179,7 +180,7 @@ public class PaymentLinksService {
     public CancelRecurringPaymentsResponse cancelRecurringPayments(CancelRecurringPaymentsRequest request,
                                                                     RequestOptions options) {
         request.validate();
-        return httpExecutor.post("/payment-links/" + request.getLinkId() + "/cancel-recurring",
+        return httpExecutor.post("/checkout/links/recurringpayment/" + request.getLinkId() + "/cancel",
                 request, CancelRecurringPaymentsResponse.class, options);
     }
 
@@ -199,6 +200,6 @@ public class PaymentLinksService {
      * @return the frequencies response
      */
     public FrequenciesResponse frequencies(RequestOptions options) {
-        return httpExecutor.get("/payment-links/frequencies", FrequenciesResponse.class, options);
+        return httpExecutor.get("/checkout/frequencies", FrequenciesResponse.class, options);
     }
 }

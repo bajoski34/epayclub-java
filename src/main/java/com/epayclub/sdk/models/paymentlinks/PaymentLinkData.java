@@ -3,75 +3,70 @@ package com.epayclub.sdk.models.paymentlinks;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Data model for payment link.
+ * Data model for payment link matching the provided JSON structure.
  */
 public class PaymentLinkData {
 
     @JsonProperty("id")
-    private String id;
-
-    @JsonProperty("linkId")
-    private String linkId;
+    private Long id;
 
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("description")
-    private String description;
+    @JsonProperty("paymentType")
+    private String paymentType;
+
+    @JsonProperty("logo")
+    private String logo;
 
     @JsonProperty("amount")
     private Double amount;
 
+    @JsonProperty("dateCreated")
+    private String dateCreated;
+
+    @JsonProperty("reference")
+    private String reference;
+
+    @JsonProperty("createdBy")
+    private String createdBy;
+
+    @JsonProperty("creatorEmail")
+    private String creatorEmail;
+
+    @JsonProperty("isActive")
+    private Boolean isActive;
+
     @JsonProperty("currency")
     private String currency;
 
-    @JsonProperty("type")
-    private String type;
+    @JsonProperty("limit")
+    private Integer limit;
 
-    @JsonProperty("url")
-    private String url;
+    @JsonProperty("paymentLinkUrl")
+    private String paymentLinkUrl;
 
-    @JsonProperty("shortUrl")
-    private String shortUrl;
+    @JsonProperty("appEnvironmentId")
+    private Integer appEnvironmentId;
 
-    @JsonProperty("redirectUrl")
-    private String redirectUrl;
+    @JsonProperty("paymentLinkType")
+    private String paymentLinkType;
 
-    @JsonProperty("active")
-    private Boolean active;
+    @JsonProperty("paymentLinkCode")
+    private String paymentLinkCode;
 
-    @JsonProperty("expiresAt")
-    private String expiresAt;
-
-    @JsonProperty("frequency")
-    private String frequency;
-
-    @JsonProperty("metadata")
-    private Object metadata;
-
-    @JsonProperty("createdAt")
-    private String createdAt;
-
-    @JsonProperty("updatedAt")
-    private String updatedAt;
+    @JsonProperty("description")
+    private String description;
 
     public PaymentLinkData() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getLinkId() {
-        return linkId;
-    }
-
-    public void setLinkId(String linkId) {
-        this.linkId = linkId;
     }
 
     public String getName() {
@@ -82,12 +77,20 @@ public class PaymentLinkData {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPaymentType() {
+        return paymentType;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public Double getAmount() {
@@ -98,6 +101,46 @@ public class PaymentLinkData {
         this.amount = amount;
     }
 
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getCreatorEmail() {
+        return creatorEmail;
+    }
+
+    public void setCreatorEmail(String creatorEmail) {
+        this.creatorEmail = creatorEmail;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
     public String getCurrency() {
         return currency;
     }
@@ -106,83 +149,51 @@ public class PaymentLinkData {
         this.currency = currency;
     }
 
-    public String getType() {
-        return type;
+    public Integer getLimit() {
+        return limit;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 
-    public String getUrl() {
-        return url;
+    public String getPaymentLinkUrl() {
+        return paymentLinkUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPaymentLinkUrl(String paymentLinkUrl) {
+        this.paymentLinkUrl = paymentLinkUrl;
     }
 
-    public String getShortUrl() {
-        return shortUrl;
+    public Integer getAppEnvironmentId() {
+        return appEnvironmentId;
     }
 
-    public void setShortUrl(String shortUrl) {
-        this.shortUrl = shortUrl;
+    public void setAppEnvironmentId(Integer appEnvironmentId) {
+        this.appEnvironmentId = appEnvironmentId;
     }
 
-    public String getRedirectUrl() {
-        return redirectUrl;
+    public String getPaymentLinkType() {
+        return paymentLinkType;
     }
 
-    public void setRedirectUrl(String redirectUrl) {
-        this.redirectUrl = redirectUrl;
+    public void setPaymentLinkType(String paymentLinkType) {
+        this.paymentLinkType = paymentLinkType;
     }
 
-    public Boolean getActive() {
-        return active;
+    public String getPaymentLinkCode() {
+        return paymentLinkCode;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public void setPaymentLinkCode(String paymentLinkCode) {
+        this.paymentLinkCode = paymentLinkCode;
     }
 
-    public String getExpiresAt() {
-        return expiresAt;
+    public String getDescription() {
+        return description;
     }
 
-    public void setExpiresAt(String expiresAt) {
-        this.expiresAt = expiresAt;
-    }
-
-    public String getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(String frequency) {
-        this.frequency = frequency;
-    }
-
-    public Object getMetadata() {
-        return metadata;
-    }
-
-    public void setMetadata(Object metadata) {
-        this.metadata = metadata;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

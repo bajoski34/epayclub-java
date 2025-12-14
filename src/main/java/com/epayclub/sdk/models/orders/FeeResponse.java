@@ -1,20 +1,22 @@
 package com.epayclub.sdk.models.orders;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Objects;
 
 /**
  * Response model for fee calculation.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FeeResponse {
 
     @JsonProperty("status")
     private String status;
 
-    @JsonProperty("statusId")
-    private String statusId;
-
-    @JsonProperty("responseCode")
-    private String responseCode;
+    // replaced legacy fields with statusCode to match API
+    @JsonProperty("statusCode")
+    private String statusCode;
 
     @JsonProperty("message")
     private String message;
@@ -33,20 +35,12 @@ public class FeeResponse {
         this.status = status;
     }
 
-    public String getStatusId() {
-        return statusId;
+    public String getStatusCode() {
+        return statusCode;
     }
 
-    public void setStatusId(String statusId) {
-        this.statusId = statusId;
-    }
-
-    public String getResponseCode() {
-        return responseCode;
-    }
-
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getMessage() {
@@ -65,19 +59,26 @@ public class FeeResponse {
         this.data = data;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class FeeData {
 
         @JsonProperty("fee")
         private Double fee;
 
-        @JsonProperty("total")
-        private Double total;
-
         @JsonProperty("amount")
         private Double amount;
 
-        @JsonProperty("currency")
-        private String currency;
+        @JsonProperty("subsidiaryFee")
+        private Double subsidiaryFee;
+
+        @JsonProperty("customerFee")
+        private Double customerFee;
+
+        @JsonProperty("totalChargedAmount")
+        private Double totalChargedAmount;
+
+        @JsonProperty("paymentOption")
+        private String paymentOption;
 
         public FeeData() {
         }
@@ -90,14 +91,6 @@ public class FeeResponse {
             this.fee = fee;
         }
 
-        public Double getTotal() {
-            return total;
-        }
-
-        public void setTotal(Double total) {
-            this.total = total;
-        }
-
         public Double getAmount() {
             return amount;
         }
@@ -106,12 +99,49 @@ public class FeeResponse {
             this.amount = amount;
         }
 
-        public String getCurrency() {
-            return currency;
+        public Double getSubsidiaryFee() {
+            return subsidiaryFee;
         }
 
-        public void setCurrency(String currency) {
-            this.currency = currency;
+        public void setSubsidiaryFee(Double subsidiaryFee) {
+            this.subsidiaryFee = subsidiaryFee;
+        }
+
+        public Double getCustomerFee() {
+            return customerFee;
+        }
+
+        public void setCustomerFee(Double customerFee) {
+            this.customerFee = customerFee;
+        }
+
+        public Double getTotalChargedAmount() {
+            return totalChargedAmount;
+        }
+
+        public void setTotalChargedAmount(Double totalChargedAmount) {
+            this.totalChargedAmount = totalChargedAmount;
+        }
+
+        public String getPaymentOption() {
+            return paymentOption;
+        }
+
+        public void setPaymentOption(String paymentOption) {
+            this.paymentOption = paymentOption;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            FeeData feeData = (FeeData) o;
+            return Objects.equals(fee, feeData.fee) && Objects.equals(amount, feeData.amount) && Objects.equals(subsidiaryFee, feeData.subsidiaryFee) && Objects.equals(customerFee, feeData.customerFee) && Objects.equals(totalChargedAmount, feeData.totalChargedAmount) && Objects.equals(paymentOption, feeData.paymentOption);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(fee, amount, subsidiaryFee, customerFee, totalChargedAmount, paymentOption);
         }
     }
 }

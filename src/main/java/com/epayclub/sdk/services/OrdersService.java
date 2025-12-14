@@ -4,6 +4,8 @@ import com.epayclub.sdk.http.HttpExecutor;
 import com.epayclub.sdk.http.RequestOptions;
 import com.epayclub.sdk.models.orders.*;
 
+import java.io.Console;
+
 /**
  * Service for order-related API operations.
  * Provides methods for creating orders, processing payments, and checking order status.
@@ -40,7 +42,10 @@ public class OrdersService {
      */
     public CreateOrderResponse create(CreateOrderRequest request, RequestOptions options) {
         request.validate();
-        return httpExecutor.post("/orders", request, CreateOrderResponse.class, options);
+
+        options = getRequestOptions(options);
+
+        return httpExecutor.post("/checkout/order/create", request, CreateOrderResponse.class, options);
     }
 
     /**
@@ -62,7 +67,21 @@ public class OrdersService {
      */
     public FeeResponse fee(FeeRequest request, RequestOptions options) {
         request.validate();
-        return httpExecutor.post("/orders/fee", request, FeeResponse.class, options);
+
+        options = getRequestOptions(options);
+
+        return httpExecutor.post("/checkout/order/fee", request, FeeResponse.class, options);
+    }
+
+    private RequestOptions getRequestOptions(RequestOptions options) {
+        if(options.getRetries() != null && options.getTimeoutSeconds() != null) {
+            int currentRetry = options.getRetries();
+            int currentTimeout = options.getTimeoutSeconds();
+            options = RequestOptions.builder().encrypt(true).retries(currentRetry).timeout(currentTimeout).build();
+        } else {
+            options = RequestOptions.builder().encrypt(true).build();
+        }
+        return options;
     }
 
     /**
@@ -84,7 +103,10 @@ public class OrdersService {
      */
     public PayOrderResponse pay(PayOrderRequest request, RequestOptions options) {
         request.validate();
-        return httpExecutor.post("/orders/pay", request, PayOrderResponse.class, options);
+
+        options = getRequestOptions(options);
+
+        return httpExecutor.post("/checkout/order/pay", request, PayOrderResponse.class, options);
     }
 
     /**
@@ -106,7 +128,10 @@ public class OrdersService {
      */
     public OrderStatusResponse status(OrderStatusRequest request, RequestOptions options) {
         request.validate();
-        return httpExecutor.get("/orders/" + request.getOrderId() + "/status",
+
+        options = getRequestOptions(options);
+
+        return httpExecutor.get("checkout/order/status",
                 OrderStatusResponse.class, options);
     }
 
@@ -129,7 +154,10 @@ public class OrdersService {
      */
     public VerifyOrderResponse verify(VerifyOrderRequest request, RequestOptions options) {
         request.validate();
-        return httpExecutor.get("/orders/" + request.getOrderId() + "/verify",
+
+        options = getRequestOptions(options);
+
+        return httpExecutor.get("/checkout/order/verify",
                 VerifyOrderResponse.class, options);
     }
 
@@ -152,7 +180,10 @@ public class OrdersService {
      */
     public OrderTimelineResponse timeline(OrderTimelineRequest request, RequestOptions options) {
         request.validate();
-        return httpExecutor.get("/orders/" + request.getOrderId() + "/timeline",
+
+        options = getRequestOptions(options);
+
+        return httpExecutor.get("/order/event/track",
                 OrderTimelineResponse.class, options);
     }
 }

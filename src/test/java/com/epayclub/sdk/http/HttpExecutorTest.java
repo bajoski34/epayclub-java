@@ -44,9 +44,23 @@ class HttpExecutorTest {
                             """)));
 
         CreateOrderRequest request = new CreateOrderRequest();
-        request.setAmount(1000.0);
-        request.setCurrency("NGN");
-        request.setEmail("test@example.com");
+        CreateOrderRequest.Order order = new CreateOrderRequest.Order();
+
+        order.setReference("order-123");
+        order.setDescription("Test order");
+        order.setAmount(1000.0);
+        order.setCurrency("NGN");
+
+        CreateOrderRequest.Customer customer = new CreateOrderRequest.Customer();
+
+        customer.setCountry("NG");
+        customer.setFirstname("John");
+        customer.setLastname("Doe");
+        customer.setMobile("09067985861");
+        customer.setEmail("johndoe@gmail.com");
+
+        request.setOrder(order);
+        request.setCustomer(customer);
 
         assertThatThrownBy(() -> client.orders().create(request))
                 .isInstanceOf(EpayClubApiException.class)
@@ -70,9 +84,24 @@ class HttpExecutorTest {
                         .withBody("<html><body>Service Unavailable</body></html>")));
 
         CreateOrderRequest request = new CreateOrderRequest();
-        request.setAmount(1000.0);
-        request.setCurrency("NGN");
-        request.setEmail("test@example.com");
+
+        CreateOrderRequest.Order order = new CreateOrderRequest.Order();
+
+        order.setReference("order-123");
+        order.setDescription("Test order");
+        order.setAmount(1000.0);
+        order.setCurrency("NGN");
+
+        CreateOrderRequest.Customer customer = new CreateOrderRequest.Customer();
+
+        customer.setCountry("NG");
+        customer.setFirstname("John");
+        customer.setLastname("Doe");
+        customer.setMobile("09067985861");
+        customer.setEmail("johndoe@gmail.com");
+
+        request.setOrder(order);
+        request.setCustomer(customer);
 
         assertThatThrownBy(() -> client.orders().create(request))
                 .isInstanceOf(EpayClubApiException.class)
@@ -93,9 +122,24 @@ class HttpExecutorTest {
                         .withBody("{\"message\":\"Internal server error\"}")));
 
         CreateOrderRequest request = new CreateOrderRequest();
-        request.setAmount(1000.0);
-        request.setCurrency("NGN");
-        request.setEmail("test@example.com");
+
+        CreateOrderRequest.Order order = new CreateOrderRequest.Order();
+
+        order.setReference("order-123");
+        order.setDescription("Test order");
+        order.setAmount(1000.0);
+        order.setCurrency("NGN");
+
+        CreateOrderRequest.Customer customer = new CreateOrderRequest.Customer();
+
+        customer.setCountry("NG");
+        customer.setFirstname("John");
+        customer.setLastname("Doe");
+        customer.setMobile("09067985861");
+        customer.setEmail("johndoe@gmail.com");
+
+        request.setOrder(order);
+        request.setCustomer(customer);
 
         assertThatThrownBy(() -> client.orders().create(request))
                 .isInstanceOf(EpayClubApiException.class)
@@ -154,9 +198,24 @@ class HttpExecutorTest {
                 .willReturn(aResponse().withStatus(503)));
 
         CreateOrderRequest request = new CreateOrderRequest();
-        request.setAmount(1000.0);
-        request.setCurrency("NGN");
-        request.setEmail("test@example.com");
+
+        CreateOrderRequest.Order order = new CreateOrderRequest.Order();
+
+        order.setReference("order-123");
+        order.setDescription("Test order");
+        order.setAmount(1000.0);
+        order.setCurrency("NGN");
+
+        CreateOrderRequest.Customer customer = new CreateOrderRequest.Customer();
+
+        customer.setCountry("NG");
+        customer.setFirstname("John");
+        customer.setLastname("Doe");
+        customer.setMobile("09067985861");
+        customer.setEmail("johndoe@gmail.com");
+
+        request.setOrder(order);
+        request.setCustomer(customer);
 
         assertThatThrownBy(() -> client.orders().create(request))
                 .isInstanceOf(EpayClubApiException.class);

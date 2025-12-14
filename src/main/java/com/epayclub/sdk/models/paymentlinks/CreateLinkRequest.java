@@ -8,32 +8,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class CreateLinkRequest {
 
-    @JsonProperty("name")
+    @JsonProperty("Name")
     private String name;
 
-    @JsonProperty("description")
+    @JsonProperty("Description")
     private String description;
 
-    @JsonProperty("amount")
+    @JsonProperty("Amount")
     private Double amount;
 
-    @JsonProperty("currency")
+    @JsonProperty("Currency")
     private String currency;
 
-    @JsonProperty("type")
-    private String type;
+    @JsonProperty("PaymentType")
+    private String paymentType;
 
-    @JsonProperty("redirectUrl")
-    private String redirectUrl;
+    @JsonProperty("Website")
+    private String website;
 
-    @JsonProperty("expiresAt")
-    private String expiresAt;
+    @JsonProperty("AuthOption")
+    private String authOption;
 
-    @JsonProperty("frequency")
-    private String frequency;
+    @JsonProperty("Mobile")
+    private String mobile;
 
-    @JsonProperty("metadata")
-    private Object metadata;
+    @JsonProperty("BackgroundImage")
+    private String backgroundImage;
+
+    @JsonProperty("Limit")
+    private String limit;
 
     public CreateLinkRequest() {
     }
@@ -43,11 +46,12 @@ public class CreateLinkRequest {
         this.description = builder.description;
         this.amount = builder.amount;
         this.currency = builder.currency;
-        this.type = builder.type;
-        this.redirectUrl = builder.redirectUrl;
-        this.expiresAt = builder.expiresAt;
-        this.frequency = builder.frequency;
-        this.metadata = builder.metadata;
+        this.paymentType = builder.paymentType;
+        this.website = builder.website;
+        this.authOption = builder.authOption;
+        this.mobile = builder.mobile;
+        this.backgroundImage = builder.backgroundImage;
+        this.limit = builder.limit;
     }
 
     /**
@@ -62,6 +66,12 @@ public class CreateLinkRequest {
         }
         if (currency == null || currency.isBlank()) {
             throw EpayClubClientException.requiredField("currency");
+        }
+        if (paymentType == null || paymentType.isBlank()) {
+            throw EpayClubClientException.requiredField("paymentType");
+        }
+        if(authOption == null || authOption.isBlank()) {
+            throw EpayClubClientException.requiredField("authOption");
         }
     }
 
@@ -97,44 +107,52 @@ public class CreateLinkRequest {
         this.currency = currency;
     }
 
-    public String getType() {
-        return type;
+    public String getPaymentType() {
+        return paymentType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setPaymentType(String type) {
+        this.paymentType = type;
     }
 
-    public String getRedirectUrl() {
-        return redirectUrl;
+    public String getWebsite() {
+        return website;
     }
 
-    public void setRedirectUrl(String redirectUrl) {
-        this.redirectUrl = redirectUrl;
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
-    public String getExpiresAt() {
-        return expiresAt;
+    public String getAuthOption() {
+        return authOption;
     }
 
-    public void setExpiresAt(String expiresAt) {
-        this.expiresAt = expiresAt;
+    public void setAuthOption(String authOption) {
+        this.authOption = authOption;
     }
 
-    public String getFrequency() {
-        return frequency;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setFrequency(String frequency) {
-        this.frequency = frequency;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public Object getMetadata() {
-        return metadata;
+    public String getBackgroundImage() {
+        return backgroundImage;
     }
 
-    public void setMetadata(Object metadata) {
-        this.metadata = metadata;
+    public void setBackgroundImage(String backgroundImage) {
+        this.backgroundImage = backgroundImage;
+    }
+
+    public String getLimit() {
+        return limit;
+    }
+
+    public void setLimit(String limit) {
+        this.limit = limit;
     }
 
     public static Builder builder() {
@@ -146,11 +164,12 @@ public class CreateLinkRequest {
         private String description;
         private Double amount;
         private String currency;
-        private String type;
-        private String redirectUrl;
-        private String expiresAt;
-        private String frequency;
-        private Object metadata;
+        private String paymentType;
+        private String website ;
+        private String authOption;
+        private String mobile;
+        private String backgroundImage;
+        private String limit;
 
         public Builder name(String name) {
             this.name = name;
@@ -172,28 +191,33 @@ public class CreateLinkRequest {
             return this;
         }
 
-        public Builder type(String type) {
-            this.type = type;
+        public Builder paymentType(String paymentType) {
+            this.paymentType = paymentType;
             return this;
         }
 
-        public Builder redirectUrl(String redirectUrl) {
-            this.redirectUrl = redirectUrl;
+        public Builder website(String website) {
+            this.website = this.website;
             return this;
         }
 
-        public Builder expiresAt(String expiresAt) {
-            this.expiresAt = expiresAt;
+        public Builder authOption(String authOption) {
+            this.authOption = authOption;
             return this;
         }
 
-        public Builder frequency(String frequency) {
-            this.frequency = frequency;
+        public Builder mobile(String mobile) {
+            this.mobile = mobile;
             return this;
         }
 
-        public Builder metadata(Object metadata) {
-            this.metadata = metadata;
+        public Builder backgroundImage(String backgroundImage) {
+            this.backgroundImage = backgroundImage;
+            return this;
+        }
+
+        public Builder limit(String limit) {
+            this.limit = limit;
             return this;
         }
 

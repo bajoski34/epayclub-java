@@ -1,5 +1,6 @@
 package com.epayclub.sdk.models.paymentoperations;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -7,16 +8,14 @@ import java.util.List;
 /**
  * Response model for bank codes.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BankCodesResponse {
 
     @JsonProperty("status")
     private String status;
 
-    @JsonProperty("statusId")
-    private String statusId;
-
-    @JsonProperty("responseCode")
-    private String responseCode;
+    @JsonProperty("statusCode")
+    private String statusCode;
 
     @JsonProperty("message")
     private String message;
@@ -35,20 +34,12 @@ public class BankCodesResponse {
         this.status = status;
     }
 
-    public String getStatusId() {
-        return statusId;
+    public String getStatusCode() {
+        return statusCode;
     }
 
-    public void setStatusId(String statusId) {
-        this.statusId = statusId;
-    }
-
-    public String getResponseCode() {
-        return responseCode;
-    }
-
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getMessage() {
@@ -67,21 +58,68 @@ public class BankCodesResponse {
         this.data = data;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class BankCode {
+
+        @JsonProperty("name")
+        private String name;
+
+        @JsonProperty("countryId")
+        private Integer countryId;
 
         @JsonProperty("bankCode")
         private String bankCode;
 
-        @JsonProperty("bankName")
-        private String bankName;
+        @JsonProperty("isMicrofinance")
+        private Boolean isMicrofinance;
 
-        @JsonProperty("bankLogo")
-        private String bankLogo;
+        @JsonProperty("isMortgage")
+        private Boolean isMortgage;
 
-        @JsonProperty("active")
-        private Boolean active;
+        @JsonProperty("ussdBankCode")
+        private String ussdBankCode;
+
+        @JsonProperty("logo")
+        private String logo;
+
+        @JsonProperty("id")
+        private Integer id;
+
+        @JsonProperty("dateCreated")
+        private String dateCreated;
+
+        @JsonProperty("dateUpdated")
+        private String dateUpdated;
+
+        @JsonProperty("dateDeleted")
+        private String dateDeleted;
+
+        @JsonProperty("createdBy")
+        private Integer createdBy;
+
+        @JsonProperty("updatedBy")
+        private Integer updatedBy;
+
+        @JsonProperty("deletedBy")
+        private Integer deletedBy;
 
         public BankCode() {
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getCountryId() {
+            return countryId;
+        }
+
+        public void setCountryId(Integer countryId) {
+            this.countryId = countryId;
         }
 
         public String getBankCode() {
@@ -92,28 +130,92 @@ public class BankCodesResponse {
             this.bankCode = bankCode;
         }
 
-        public String getBankName() {
-            return bankName;
+        public Boolean getIsMicrofinance() {
+            return isMicrofinance;
         }
 
-        public void setBankName(String bankName) {
-            this.bankName = bankName;
+        public void setIsMicrofinance(Boolean isMicrofinance) {
+            this.isMicrofinance = isMicrofinance;
         }
 
-        public String getBankLogo() {
-            return bankLogo;
+        public Boolean getIsMortgage() {
+            return isMortgage;
         }
 
-        public void setBankLogo(String bankLogo) {
-            this.bankLogo = bankLogo;
+        public void setIsMortgage(Boolean isMortgage) {
+            this.isMortgage = isMortgage;
         }
 
-        public Boolean getActive() {
-            return active;
+        public String getUssdBankCode() {
+            return ussdBankCode;
         }
 
-        public void setActive(Boolean active) {
-            this.active = active;
+        public void setUssdBankCode(String ussdBankCode) {
+            this.ussdBankCode = ussdBankCode;
+        }
+
+        public String getLogo() {
+            return logo;
+        }
+
+        public void setLogo(String logo) {
+            this.logo = logo;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getDateCreated() {
+            return dateCreated;
+        }
+
+        public void setDateCreated(String dateCreated) {
+            this.dateCreated = dateCreated;
+        }
+
+        public String getDateUpdated() {
+            return dateUpdated;
+        }
+
+        public void setDateUpdated(String dateUpdated) {
+            this.dateUpdated = dateUpdated;
+        }
+
+        public String getDateDeleted() {
+            return dateDeleted;
+        }
+
+        public void setDateDeleted(String dateDeleted) {
+            this.dateDeleted = dateDeleted;
+        }
+
+        public Integer getCreatedBy() {
+            return createdBy;
+        }
+
+        public void setCreatedBy(Integer createdBy) {
+            this.createdBy = createdBy;
+        }
+
+        public Integer getUpdatedBy() {
+            return updatedBy;
+        }
+
+        public void setUpdatedBy(Integer updatedBy) {
+            this.updatedBy = updatedBy;
+        }
+
+        public Integer getDeletedBy() {
+            return deletedBy;
+        }
+
+        public void setDeletedBy(Integer deletedBy) {
+            this.deletedBy = deletedBy;
         }
     }
 }

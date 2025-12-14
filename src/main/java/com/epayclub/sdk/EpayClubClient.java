@@ -57,13 +57,12 @@ public class EpayClubClient {
      */
     public static final String DEFAULT_USER_AGENT = "epayclub-java/1.0.0";
 
-    private final HttpExecutor httpExecutor;
     private final OrdersService ordersService;
     private final PaymentLinksService paymentLinksService;
     private final PaymentOperationsService paymentOperationsService;
 
     private EpayClubClient(Builder builder) {
-        this.httpExecutor = new HttpExecutor(
+        HttpExecutor httpExecutor = new HttpExecutor(
                 builder.baseUrl,
                 builder.apiKey,
                 builder.merchantEncryptionKey,

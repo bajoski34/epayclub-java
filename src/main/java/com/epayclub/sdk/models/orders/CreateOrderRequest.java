@@ -1,152 +1,102 @@
 package com.epayclub.sdk.models.orders;
 
 import com.epayclub.sdk.errors.EpayClubClientException;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
+
 /**
- * Request model for creating an order.
+ * Request model for creating an order using nested structure:
+ * {
+ *   "customer": { ... },
+ *   "order": { ... },
+ *   "payment": { ... },
+ *   "paymentMeta": { ... }
+ * }
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateOrderRequest {
 
-    @JsonProperty("amount")
-    private Double amount;
+    @JsonProperty("customer")
+    private Customer customer;
 
-    @JsonProperty("currency")
-    private String currency;
+    @JsonProperty("order")
+    private Order order;
 
-    @JsonProperty("email")
-    private String email;
+    @JsonProperty("payment")
+    private Payment payment;
 
-    @JsonProperty("phoneNumber")
-    private String phoneNumber;
-
-    @JsonProperty("firstName")
-    private String firstName;
-
-    @JsonProperty("lastName")
-    private String lastName;
-
-    @JsonProperty("narration")
-    private String narration;
-
-    @JsonProperty("redirectUrl")
-    private String redirectUrl;
-
-    @JsonProperty("reference")
-    private String reference;
-
-    @JsonProperty("metadata")
-    private Object metadata;
+    @JsonProperty("paymentMeta")
+    private Map<String, Object> paymentMeta;
 
     public CreateOrderRequest() {
     }
 
     private CreateOrderRequest(Builder builder) {
-        this.amount = builder.amount;
-        this.currency = builder.currency;
-        this.email = builder.email;
-        this.phoneNumber = builder.phoneNumber;
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-        this.narration = builder.narration;
-        this.redirectUrl = builder.redirectUrl;
-        this.reference = builder.reference;
-        this.metadata = builder.metadata;
+        this.customer = builder.customer;
+        this.order = builder.order;
+        this.payment = builder.payment;
+        this.paymentMeta = builder.paymentMeta;
     }
 
     /**
-     * Validates the request has all required fields.
+     * Validate required fields for the API.
      */
     public void validate() {
-        if (amount == null || amount <= 0) {
-            throw EpayClubClientException.requiredField("amount (must be positive)");
+        if (order == null) {
+            throw EpayClubClientException.requiredField("order");
         }
-        if (currency == null || currency.isBlank()) {
-            throw EpayClubClientException.requiredField("currency");
+        if (order.getAmount() == null || order.getAmount() <= 0) {
+            throw EpayClubClientException.requiredField("order.amount (must be positive)");
         }
-        if (email == null || email.isBlank()) {
-            throw EpayClubClientException.requiredField("email");
+        if (order.getCurrency() == null || order.getCurrency().isBlank()) {
+            throw EpayClubClientException.requiredField("order.currency");
+        }
+        if (order.getReference() == null || order.getReference().isBlank()) {
+            throw EpayClubClientException.requiredField("order.reference");
+        }
+
+        if (customer == null) {
+            throw EpayClubClientException.requiredField("customer");
+        }
+        boolean hasEmail = customer.getEmail() != null && !customer.getEmail().isBlank();
+        boolean hasMobile = customer.getMobile() != null && !customer.getMobile().isBlank();
+        if (!hasEmail && !hasMobile) {
+            throw EpayClubClientException.requiredField("customer.email or customer.mobile");
         }
     }
 
-    public Double getAmount() {
-        return amount;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public String getCurrency() {
-        return currency;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public String getEmail() {
-        return email;
+    public Payment getPayment() {
+        return payment;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public Map<String, Object> getPaymentMeta() {
+        return paymentMeta;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getNarration() {
-        return narration;
-    }
-
-    public void setNarration(String narration) {
-        this.narration = narration;
-    }
-
-    public String getRedirectUrl() {
-        return redirectUrl;
-    }
-
-    public void setRedirectUrl(String redirectUrl) {
-        this.redirectUrl = redirectUrl;
-    }
-
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
-    public Object getMetadata() {
-        return metadata;
-    }
-
-    public void setMetadata(Object metadata) {
-        this.metadata = metadata;
+    public void setPaymentMeta(Map<String, Object> paymentMeta) {
+        this.paymentMeta = paymentMeta;
     }
 
     public static Builder builder() {
@@ -154,71 +104,234 @@ public class CreateOrderRequest {
     }
 
     public static class Builder {
-        private Double amount;
-        private String currency;
-        private String email;
-        private String phoneNumber;
-        private String firstName;
-        private String lastName;
-        private String narration;
-        private String redirectUrl;
-        private String reference;
-        private Object metadata;
+        private Customer customer;
+        private Order order;
+        private Payment payment;
+        private Map<String, Object> paymentMeta;
 
-        public Builder amount(Double amount) {
-            this.amount = amount;
+        public Builder customer(Customer customer) {
+            this.customer = customer;
             return this;
         }
 
-        public Builder currency(String currency) {
-            this.currency = currency;
+        public Builder order(Order order) {
+            this.order = order;
             return this;
         }
 
-        public Builder email(String email) {
-            this.email = email;
+        public Builder payment(Payment payment) {
+            this.payment = payment;
             return this;
         }
 
-        public Builder phoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
+        public Builder paymentMeta(Map<String, Object> paymentMeta) {
+            this.paymentMeta = paymentMeta;
             return this;
         }
 
-        public Builder firstName(String firstName) {
-            this.firstName = firstName;
+        // Convenience helpers to build nested objects without creating them manually
+        public Builder customer(String email, String mobile, String firstname, String lastname, String country) {
+            this.customer = new Customer(email, mobile, firstname, lastname, country);
             return this;
         }
 
-        public Builder lastName(String lastName) {
-            this.lastName = lastName;
+        public Builder order(Double amount, String reference, String currency, String description) {
+            this.order = new Order(amount, reference, currency, description);
             return this;
         }
 
-        public Builder narration(String narration) {
-            this.narration = narration;
-            return this;
-        }
-
-        public Builder redirectUrl(String redirectUrl) {
-            this.redirectUrl = redirectUrl;
-            return this;
-        }
-
-        public Builder reference(String reference) {
-            this.reference = reference;
-            return this;
-        }
-
-        public Builder metadata(Object metadata) {
-            this.metadata = metadata;
+        public Builder payment(String redirectUrl, Integer paymentlinkid, Integer frequencyId, Integer numberOfPayments) {
+            this.payment = new Payment(redirectUrl, paymentlinkid, frequencyId, numberOfPayments);
             return this;
         }
 
         public CreateOrderRequest build() {
-            CreateOrderRequest request = new CreateOrderRequest(this);
-            request.validate();
-            return request;
+            CreateOrderRequest r = new CreateOrderRequest(this);
+            r.validate();
+            return r;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Customer {
+        @JsonProperty("email")
+        private String email;
+
+        @JsonProperty("mobile")
+        private String mobile;
+
+        @JsonProperty("firstname")
+        private String firstname;
+
+        @JsonProperty("lastname")
+        private String lastname;
+
+        @JsonProperty("country")
+        private String country;
+
+        public Customer() {
+        }
+
+        public Customer(String email, String mobile, String firstname, String lastname, String country) {
+            this.email = email;
+            this.mobile = mobile;
+            this.firstname = firstname;
+            this.lastname = lastname;
+            this.country = country;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
+
+        public String getFirstname() {
+            return firstname;
+        }
+
+        public void setFirstname(String firstname) {
+            this.firstname = firstname;
+        }
+
+        public String getLastname() {
+            return lastname;
+        }
+
+        public void setLastname(String lastname) {
+            this.lastname = lastname;
+        }
+
+        public String getCountry() {
+            return country;
+        }
+
+        public void setCountry(String country) {
+            this.country = country;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Order {
+        @JsonProperty("amount")
+        private Double amount;
+
+        @JsonProperty("reference")
+        private String reference;
+
+        @JsonProperty("currency")
+        private String currency;
+
+        @JsonProperty("description")
+        private String description;
+
+        public Order() {
+        }
+
+        public Order(Double amount, String reference, String currency, String description) {
+            this.amount = amount;
+            this.reference = reference;
+            this.currency = currency;
+            this.description = description;
+        }
+
+        public Double getAmount() {
+            return amount;
+        }
+
+        public void setAmount(Double amount) {
+            this.amount = amount;
+        }
+
+        public String getReference() {
+            return reference;
+        }
+
+        public void setReference(String reference) {
+            this.reference = reference;
+        }
+
+        public String getCurrency() {
+            return currency;
+        }
+
+        public void setCurrency(String currency) {
+            this.currency = currency;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Payment {
+        @JsonProperty("RedirectUrl")
+        private String redirectUrl;
+
+        @JsonProperty("paymentlinkid")
+        private Integer paymentlinkid;
+
+        @JsonProperty("frequencyId")
+        private Integer frequencyId;
+
+        @JsonProperty("numberOfPayments")
+        private Integer numberOfPayments;
+
+        public Payment() {
+        }
+
+        public Payment(String redirectUrl, Integer paymentlinkid, Integer frequencyId, Integer numberOfPayments) {
+            this.redirectUrl = redirectUrl;
+            this.paymentlinkid = paymentlinkid;
+            this.frequencyId = frequencyId;
+            this.numberOfPayments = numberOfPayments;
+        }
+
+        public String getRedirectUrl() {
+            return redirectUrl;
+        }
+
+        public void setRedirectUrl(String redirectUrl) {
+            this.redirectUrl = redirectUrl;
+        }
+
+        public Integer getPaymentlinkid() {
+            return paymentlinkid;
+        }
+
+        public void setPaymentlinkid(Integer paymentlinkid) {
+            this.paymentlinkid = paymentlinkid;
+        }
+
+        public Integer getFrequencyId() {
+            return frequencyId;
+        }
+
+        public void setFrequencyId(Integer frequencyId) {
+            this.frequencyId = frequencyId;
+        }
+
+        public Integer getNumberOfPayments() {
+            return numberOfPayments;
+        }
+
+        public void setNumberOfPayments(Integer numberOfPayments) {
+            this.numberOfPayments = numberOfPayments;
         }
     }
 }
