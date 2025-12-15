@@ -49,8 +49,7 @@ public class OrderStatusRequest {
         }
 
         public OrderStatusRequest build() {
-            OrderStatusRequest request = new OrderStatusRequest(reference);
-            return request;
+            return new OrderStatusRequest(reference);
         }
     }
 }

@@ -56,7 +56,7 @@ public class RequestOptions {
      * Creates a RequestOptions with encryption enabled.
      *
      * @param encrypt whether to encrypt the request
-     * @return a new RequestOptions
+     * @return new RequestOptions
      */
     public static RequestOptions encrypt(boolean encrypt) {
         return builder().encrypt(encrypt).build();
@@ -115,7 +115,7 @@ public class RequestOptions {
         /**
          * Builds the RequestOptions.
          *
-         * @return a new RequestOptions
+         * @return new RequestOptions
          */
         public RequestOptions build() {
             return new RequestOptions(this);

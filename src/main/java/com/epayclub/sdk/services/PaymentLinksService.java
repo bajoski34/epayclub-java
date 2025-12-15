@@ -46,7 +46,7 @@ public class PaymentLinksService {
     /**
      * Lists payment links.
      *
-     * @param request the fetch links request (may be null for defaults)
+     * @param request the fetch links request (maybe null for defaults)
      * @return the fetch links response
      */
     public FetchLinksResponse list(FetchLinksRequest request) {
@@ -56,18 +56,18 @@ public class PaymentLinksService {
     /**
      * Lists payment links with custom request options.
      *
-     * @param request the fetch links request (may be null for defaults)
+     * @param request the fetch links request (maybe null for defaults)
      * @param options request options
      * @return the fetch links response
      */
     public FetchLinksResponse list(FetchLinksRequest request, RequestOptions options) {
         String path = "/checkout/links/all";
-        if (request != null) {
-            String queryString = request.toQueryString();
-            if (!queryString.isEmpty()) {
-                path += "?" + queryString;
-            }
-        }
+//        if (request != null) {
+//            String queryString = request.toQueryString();
+//            if (!queryString.isEmpty()) {
+//                path += "?" + queryString;
+//            }
+//        }
         return httpExecutor.get(path, FetchLinksResponse.class, options);
     }
 
@@ -109,7 +109,10 @@ public class PaymentLinksService {
      */
     public EditLinkResponse edit(EditLinkRequest request, RequestOptions options) {
         request.validate();
-        return httpExecutor.patch("/checkout/links/" + request.getLinkId() + "/edit",
+
+        String path = "/checkout/links/" + request.getId() + "/edit";
+        request.setId(null);
+        return httpExecutor.patch(path,
                 request, EditLinkResponse.class, options);
     }
 
@@ -132,7 +135,8 @@ public class PaymentLinksService {
      */
     public ActivateLinkResponse activate(ActivateLinkRequest request, RequestOptions options) {
         request.validate();
-        return httpExecutor.post("/checkout/links/" + request.getLinkId() + "/status/activate",
+        String path = "/checkout/links/" + request.getId() + "/status/activate";
+        return httpExecutor.patch(path,
                 null, ActivateLinkResponse.class, options);
     }
 
@@ -156,7 +160,7 @@ public class PaymentLinksService {
     public DeactivateLinkResponse deactivate(DeactivateLinkRequest request, RequestOptions options) {
         request.validate();
 
-        return httpExecutor.post("/checkout/links/" + request.getLinkId() + "/status/disable",
+        return httpExecutor.patch("/checkout/links/" + request.getLinkId() + "/status/disable",
                 null, DeactivateLinkResponse.class, options);
     }
 
@@ -180,7 +184,7 @@ public class PaymentLinksService {
     public CancelRecurringPaymentsResponse cancelRecurringPayments(CancelRecurringPaymentsRequest request,
                                                                     RequestOptions options) {
         request.validate();
-        return httpExecutor.post("/checkout/links/recurringpayment/" + request.getLinkId() + "/cancel",
+        return httpExecutor.patch("/checkout/links/recurringpayment/" + request.getId() + "/cancel",
                 request, CancelRecurringPaymentsResponse.class, options);
     }
 

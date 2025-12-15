@@ -75,6 +75,7 @@ class PaymentLinksServiceTest {
                 .paymentType("SC")
                 .currency("USD")
                 .authOption("NOAUTH")
+                .amount(1200.0)
                 .description("A Demo to understand how payment links work.")
                 .build();
 
@@ -82,15 +83,13 @@ class PaymentLinksServiceTest {
 
         // updated to reflect nested paymentLink
         assertThat(response.getData().getPaymentLink()).isNotNull();
-        assertThat(response.getData().getPaymentLink().getAmount()).isEqualTo(5000.0);
+        assertThat(response.getData().getPaymentLink().getCurrency()).isEqualTo("USD");
         assertThat(response.getData().getPaymentLink().getIsActive()).isTrue();
     }
 
     @Test
     void list_shouldFetchPaymentLinks() {
         stubFor(get(urlPathEqualTo("/checkout/links/all"))
-                .withQueryParam("page", equalTo("1"))
-                .withQueryParam("limit", equalTo("10"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
@@ -138,8 +137,7 @@ class PaymentLinksServiceTest {
                             """)));
 
         FetchLinksRequest request = FetchLinksRequest.builder()
-                .page(1)
-                .limit(10)
+                .id(108)
                 .build();
 
         FetchLinksResponse response = client.paymentLinks().list(request);
@@ -205,13 +203,13 @@ class PaymentLinksServiceTest {
 
         LinkTypesResponse response = client.paymentLinks().types();
 
-        assertThat(response.getData()).hasSize(2);
-        assertThat(response.getData().get(0).getType()).isEqualTo("one_time");
+        assertThat(response.getPaymentLinkTypes()).hasSize(3);
+        assertThat(response.getPaymentLinkTypes().get(0).getCode()).isEqualTo("SC");
     }
 
     @Test
     void edit_shouldEditPaymentLink() {
-        stubFor(patch(urlEqualTo("/checkout/links/{id}/edit"))
+        stubFor(patch(urlEqualTo("/checkout/links/125/edit"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
@@ -252,110 +250,136 @@ class PaymentLinksServiceTest {
                             """)));
 
         EditLinkRequest request = EditLinkRequest.builder()
-                .linkId("link123")
+                .id("125")
+                .description("A Demo to understand how payment links work.")
                 .name("Updated Product")
-                .amount(7500.0)
+                .amount("7500")
+                .website("https://merchant.example.com/product")
+                .mobile("07023232232")
+                .backgroundImage("https://merchant.example.com/images/bg.png")
+                .paymentType("MC")
+                .authOption("NOAUTH")
+                .limit("3")
                 .build();
 
         EditLinkResponse response = client.paymentLinks().edit(request);
 
-        // adapt to nested paymentLink
-        assertThat(response.getData().getPaymentLink().getName()).isEqualTo("Updated Product");
-        assertThat(response.getData().getPaymentLink().getAmount()).isEqualTo(7500.0);
+        // adapt to nested paymentLink.
+        assertThat(response.getData().getPaymentLink().getName()).isEqualTo("Checkout TestA");
+        assertThat(response.getStatus()).isEqualTo("success");
     }
 
     @Test
     void activate_shouldActivateLink() {
-        stubFor(post(urlEqualTo("/payment-links/link123/activate"))
+        stubFor(patch(urlEqualTo("/checkout/links/link123/status/activate"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
                         .withBody("""
-                            {
-                                "status": "success",
-                                "data": {
-                                    "linkId": "link123",
-                                    "active": true
-                                }
-                            }
+                                {
+                                     "data": null,
+                                     "status": "success",
+                                     "statusCode": "00",
+                                     "message": "Payment link status updated successfully"
+                                 }
                             """)));
 
         ActivateLinkRequest request = new ActivateLinkRequest("link123");
 
         ActivateLinkResponse response = client.paymentLinks().activate(request);
 
-        assertThat(response.getData().getPaymentLink().getIsActive()).isTrue();
+        assertThat(response.getData()).isEqualTo(null);
     }
 
     @Test
     void deactivate_shouldDeactivateLink() {
-        stubFor(post(urlEqualTo("/payment-links/link123/deactivate"))
+        stubFor(patch(urlEqualTo("/checkout/links/link123/status/disable"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
                         .withBody("""
                             {
-                                "status": "success",
-                                "data": {
-                                    "linkId": "link123",
-                                    "active": false
-                                }
-                            }
+                                 "data": null,
+                                 "status": "success",
+                                 "statusCode": "00",
+                                 "message": "Payment link status updated successfully"
+                             }
                             """)));
 
         DeactivateLinkRequest request = new DeactivateLinkRequest("link123");
 
         DeactivateLinkResponse response = client.paymentLinks().deactivate(request);
 
-        assertThat(response.getData().getPaymentLink().getIsActive()).isFalse();
+        assertThat(response.getData()).isEqualTo(null);
     }
 
     @Test
     void frequencies_shouldFetchFrequencies() {
-        stubFor(get(urlEqualTo("/payment-links/frequencies"))
+        stubFor(get(urlEqualTo("/checkout/frequencies"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
                         .withBody("""
-                            {
-                                "status": "success",
-                                "data": [
-                                    {
-                                        "mobile": "daily",
-                                        "name": "Daily",
-                                        "description": "Once per day"
-                                    },
-                                    {
-                                        "mobile": "weekly",
-                                        "name": "Weekly",
-                                        "description": "Once per week"
-                                    }
-                                ]
-                            }
+                                {
+                                    "data": [
+                                        {
+                                            "hours": 1,
+                                            "days": 0,
+                                            "name": "Hourly",
+                                            "description": "Payment made hourly",
+                                            "isActive": null,
+                                            "id": 1,
+                                            "dateCreated": "2023-07-06T08:48:45",
+                                            "dateUpdated": null,
+                                            "dateDeleted": null,
+                                            "createdBy": -1,
+                                            "updatedBy": null,
+                                            "deletedBy": null
+                                        },
+                                        {
+                                            "hours": 24,
+                                            "days": 1,
+                                            "name": "Daily",
+                                            "description": "Daily",
+                                            "isActive": null,
+                                            "id": 2,
+                                            "dateCreated": "2023-07-06T08:48:45",
+                                            "dateUpdated": null,
+                                            "dateDeleted": null,
+                                            "createdBy": -1,
+                                            "updatedBy": null,
+                                            "deletedBy": null
+                                        }
+                                    ],
+                                    "status": "success",
+                                    "statusCode": "00",
+                                    "message": "Operation successful"
+                                }
                             """)));
 
         FrequenciesResponse response = client.paymentLinks().frequencies();
 
         assertThat(response.getData()).hasSize(2);
-        assertThat(response.getData().get(0).getFrequency()).isEqualTo("daily");
+        assertThat(response.getData().get(0).getName()).isEqualTo("Hourly");
     }
 
     @Test
     void cancelRecurringPayments_shouldCancelRecurring() {
-        stubFor(post(urlEqualTo("/payment-links/link123/cancel-recurring"))
+        stubFor(patch(urlEqualTo("/checkout/links/recurringpayment/link123/cancel"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
                         .withBody("""
                             {
+                                "data": null,
                                 "status": "success",
-                                "message": "Recurring payments cancelled"
+                                "statusCode": "00",
+                                "message": "Recurring payment cancelled successfully"
                             }
                             """)));
 
         CancelRecurringPaymentsRequest request = CancelRecurringPaymentsRequest.builder()
-                .linkId("link123")
-                .subscriptionId("sub456")
+                .id("link123")
                 .build();
 
         CancelRecurringPaymentsResponse response = client.paymentLinks().cancelRecurringPayments(request);

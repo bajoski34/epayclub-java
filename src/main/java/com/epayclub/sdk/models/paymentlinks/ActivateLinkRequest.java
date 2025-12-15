@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class ActivateLinkRequest {
 
-    @JsonProperty("linkId")
-    private String linkId;
+    @JsonProperty("id")
+    private String id;
 
     public ActivateLinkRequest() {
     }
 
-    public ActivateLinkRequest(String linkId) {
-        this.linkId = linkId;
+    public ActivateLinkRequest(String id) {
+        this.id = id;
         validate();
     }
 
@@ -23,17 +23,17 @@ public class ActivateLinkRequest {
      * Validates the request has all required fields.
      */
     public void validate() {
-        if (linkId == null || linkId.isBlank()) {
-            throw EpayClubClientException.requiredField("linkId");
+        if (id == null || id.isBlank()) {
+            throw EpayClubClientException.requiredField("id");
         }
     }
 
-    public String getLinkId() {
-        return linkId;
+    public String getId() {
+        return id;
     }
 
-    public void setLinkId(String linkId) {
-        this.linkId = linkId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public static Builder builder() {
@@ -41,15 +41,15 @@ public class ActivateLinkRequest {
     }
 
     public static class Builder {
-        private String linkId;
+        private String id;
 
-        public Builder linkId(String linkId) {
-            this.linkId = linkId;
+        public Builder id(String id) {
+            this.id = id;
             return this;
         }
 
         public ActivateLinkRequest build() {
-            return new ActivateLinkRequest(linkId);
+            return new ActivateLinkRequest(id);
         }
     }
 }

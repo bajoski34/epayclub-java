@@ -62,35 +62,43 @@ EpayClubClient client = EpayClubClient.builder()
 
 ### Create an Order
 
+(Note: the SDK uses a nested request shape for orders — `customer`, `order`, and `payment` are nested objects.)
+
 ```java
 import com.epayclub.sdk.models.orders.*;
 
 CreateOrderRequest request = CreateOrderRequest.builder()
-    .amount(1000.0)
-    .currency("NGN")
-    .email("customer@example.com")
-    .firstName("John")
-    .lastName("Doe")
-    .narration("Payment for Order #12345")
-    .website("https://yoursite.com/callback")
+    // convenience helper that builds the nested customer object
+    .customer("customer@example.com", "0900000000", "John", "Doe", "NG")
+    // convenience helper that builds the nested order object: amount, reference, currency, description
+    .order(1000.0, "ORDER-12345", "NGN", "Payment for Order #12345")
+    // optional payment meta (redirect URL, etc.)
+    .payment("https://yoursite.com/callback", null, null, null)
     .build();
 
 CreateOrderResponse response = client.orders().create(request);
 
-System.out.println("Order ID: " + response.getData().getOrderId());
-System.out.println("Checkout URL: " + response.getData().getCheckoutUrl());
+// Access created order reference and payment/source info from the response
+System.out.println("Order reference: " + response.getData().getOrder().getReference());
+System.out.println("Payment source / checkout info: " +
+        (response.getData().getPayment() != null ? response.getData().getPayment().getSource() : "(none)"));
 ```
 
 ### Process Payment
 
+(The SDK expects a `reference` string for the order and a nested `Card` object when paying by card. The SDK tests use the code "C" for card paymentMethod.)
+
 ```java
 PayOrderRequest payRequest = PayOrderRequest.builder()
-    .orderId(response.getData().getOrderId())
-    .paymentMethod("card")
-    .cardNumber("4111111111111111")
-    .expiryMonth("12")
-    .expiryYear("25")
-    .cvv("123")
+    .reference(response.getData().getOrder().getReference())
+    .paymentMethod("C") // use "C" for card (SDK validation expects this code)
+    .country("NG")
+    .card(PayOrderRequest.Card.builder()
+        .cardNumber("4111111111111111")
+        .expiryMonth("12")
+        .expiryYear("25")
+        .cvv("123")
+        .build())
     .build();
 
 PayOrderResponse payResponse = client.orders().pay(payRequest);
@@ -99,7 +107,10 @@ PayOrderResponse payResponse = client.orders().pay(payRequest);
 ### Verify Order
 
 ```java
-VerifyOrderRequest verifyRequest = new VerifyOrderRequest(orderId);
+// Use the order reference returned when you created the order
+String orderRef = response.getData().getOrder().getReference();
+
+VerifyOrderRequest verifyRequest = new VerifyOrderRequest(orderRef);
 VerifyOrderResponse verifyResponse = client.orders().verify(verifyRequest);
 
 if (Boolean.TRUE.equals(verifyResponse.getData().getVerified())) {
@@ -168,7 +179,7 @@ client.paymentOperations().bankCodes()
 
 ## Encryption Support
 
-For endpoints that require encrypted payloads, configure the encryption key:
+For endpoints that require encrypted payloads, configure the encryption key when building the client:
 
 ```java
 EpayClubClient client = EpayClubClient.builder()
@@ -176,14 +187,18 @@ EpayClubClient client = EpayClubClient.builder()
     .merchantEncryptionKey("your-base64-encoded-encryption-key")
     .build();
 
-// Use RequestOptions to enable encryption
+// Use RequestOptions to enable encryption for a specific call. Note: OrdersService currently forces encryption for order-related calls internally,
+// but you can still explicitly pass options when calling the API.
 PayOrderRequest request = PayOrderRequest.builder()
-    .orderId("order123")
-    .paymentMethod("card")
-    .cardNumber("4111111111111111")
-    .expiryMonth("12")
-    .expiryYear("25")
-    .cvv("123")
+    .reference("ORDER-12345")
+    .paymentMethod("C")
+    .country("NG")
+    .card(PayOrderRequest.Card.builder()
+        .cardNumber("4111111111111111")
+        .expiryMonth("12")
+        .expiryYear("25")
+        .cvv("123")
+        .build())
     .build();
 
 PayOrderResponse response = client.orders().pay(request, RequestOptions.encrypt(true));

@@ -9,22 +9,27 @@ import java.util.List;
  */
 public class LinkTypesResponse {
 
+    @JsonProperty("paymentLinkTypes")
+    private List<PaymentLinkType> paymentLinkTypes;
+
     @JsonProperty("status")
     private String status;
 
-    @JsonProperty("statusId")
-    private String statusId;
-
-    @JsonProperty("responseCode")
-    private String responseCode;
+    @JsonProperty("statusCode")
+    private String statusCode;
 
     @JsonProperty("message")
     private String message;
 
-    @JsonProperty("data")
-    private List<LinkType> data;
-
     public LinkTypesResponse() {
+    }
+
+    public List<PaymentLinkType> getPaymentLinkTypes() {
+        return paymentLinkTypes;
+    }
+
+    public void setPaymentLinkTypes(List<PaymentLinkType> paymentLinkTypes) {
+        this.paymentLinkTypes = paymentLinkTypes;
     }
 
     public String getStatus() {
@@ -35,20 +40,12 @@ public class LinkTypesResponse {
         this.status = status;
     }
 
-    public String getStatusId() {
-        return statusId;
+    public String getStatusCode() {
+        return statusCode;
     }
 
-    public void setStatusId(String statusId) {
-        this.statusId = statusId;
-    }
-
-    public String getResponseCode() {
-        return responseCode;
-    }
-
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getMessage() {
@@ -59,42 +56,50 @@ public class LinkTypesResponse {
         this.message = message;
     }
 
-    public List<LinkType> getData() {
-        return data;
-    }
+    public static class PaymentLinkType {
 
-    public void setData(List<LinkType> data) {
-        this.data = data;
-    }
-
-    public static class LinkType {
-
-        @JsonProperty("type")
-        private String type;
-
-        @JsonProperty("name")
-        private String name;
+        @JsonProperty("paymentLinkName")
+        private String paymentLinkName;
 
         @JsonProperty("description")
         private String description;
 
-        public LinkType() {
+        @JsonProperty("status")
+        private Boolean status;
+
+        @JsonProperty("code")
+        private String code;
+
+        @JsonProperty("id")
+        private Integer id;
+
+        @JsonProperty("dateCreated")
+        private String dateCreated;
+
+        @JsonProperty("dateUpdated")
+        private String dateUpdated;
+
+        @JsonProperty("dateDeleted")
+        private String dateDeleted;
+
+        @JsonProperty("createdBy")
+        private Integer createdBy;
+
+        @JsonProperty("updatedBy")
+        private Integer updatedBy;
+
+        @JsonProperty("deletedBy")
+        private Integer deletedBy;
+
+        public PaymentLinkType() {
         }
 
-        public String getType() {
-            return type;
+        public String getPaymentLinkName() {
+            return paymentLinkName;
         }
 
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
+        public void setPaymentLinkName(String paymentLinkName) {
+            this.paymentLinkName = paymentLinkName;
         }
 
         public String getDescription() {
@@ -103,6 +108,78 @@ public class LinkTypesResponse {
 
         public void setDescription(String description) {
             this.description = description;
+        }
+
+        public Boolean getStatus() {
+            return status;
+        }
+
+        public void setStatus(Boolean status) {
+            this.status = status;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getDateCreated() {
+            return dateCreated;
+        }
+
+        public void setDateCreated(String dateCreated) {
+            this.dateCreated = dateCreated;
+        }
+
+        public String getDateUpdated() {
+            return dateUpdated;
+        }
+
+        public void setDateUpdated(String dateUpdated) {
+            this.dateUpdated = dateUpdated;
+        }
+
+        public String getDateDeleted() {
+            return dateDeleted;
+        }
+
+        public void setDateDeleted(String dateDeleted) {
+            this.dateDeleted = dateDeleted;
+        }
+
+        public Integer getCreatedBy() {
+            return createdBy;
+        }
+
+        public void setCreatedBy(Integer createdBy) {
+            this.createdBy = createdBy;
+        }
+
+        public Integer getUpdatedBy() {
+            return updatedBy;
+        }
+
+        public void setUpdatedBy(Integer updatedBy) {
+            this.updatedBy = updatedBy;
+        }
+
+        public Integer getDeletedBy() {
+            return deletedBy;
+        }
+
+        public void setDeletedBy(Integer deletedBy) {
+            this.deletedBy = deletedBy;
         }
     }
 }

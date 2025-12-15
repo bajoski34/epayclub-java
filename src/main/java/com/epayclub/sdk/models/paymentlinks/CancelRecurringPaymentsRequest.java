@@ -8,43 +8,31 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class CancelRecurringPaymentsRequest {
 
-    @JsonProperty("linkId")
-    private String linkId;
-
-    @JsonProperty("subscriptionId")
-    private String subscriptionId;
+    @JsonProperty("id")
+    private String id;
 
     public CancelRecurringPaymentsRequest() {
     }
 
     private CancelRecurringPaymentsRequest(Builder builder) {
-        this.linkId = builder.linkId;
-        this.subscriptionId = builder.subscriptionId;
+        this.id = builder.id;
     }
 
     /**
      * Validates the request has all required fields.
      */
     public void validate() {
-        if (linkId == null || linkId.isBlank()) {
+        if (id == null || id.isBlank()) {
             throw EpayClubClientException.requiredField("linkId");
         }
     }
 
-    public String getLinkId() {
-        return linkId;
+    public String getId() {
+        return id;
     }
 
-    public void setLinkId(String linkId) {
-        this.linkId = linkId;
-    }
-
-    public String getSubscriptionId() {
-        return subscriptionId;
-    }
-
-    public void setSubscriptionId(String subscriptionId) {
-        this.subscriptionId = subscriptionId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public static Builder builder() {
@@ -52,16 +40,10 @@ public class CancelRecurringPaymentsRequest {
     }
 
     public static class Builder {
-        private String linkId;
-        private String subscriptionId;
+        private String id;
 
-        public Builder linkId(String linkId) {
-            this.linkId = linkId;
-            return this;
-        }
-
-        public Builder subscriptionId(String subscriptionId) {
-            this.subscriptionId = subscriptionId;
+        public Builder id(String linkId) {
+            this.id = linkId;
             return this;
         }
 

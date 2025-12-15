@@ -5,17 +5,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Request model for order timeline.
+ * <p>
+ * JSON shape expected:
+ * {
+ *   "eventname": "order",
+ *   "orderreference": "ORDER-123456"
+ * }
  */
 public class OrderTimelineRequest {
 
-    @JsonProperty("orderId")
-    private String orderId;
+    @JsonProperty("eventname")
+    private String eventName;
+
+    @JsonProperty("orderreference")
+    private String orderReference;
 
     public OrderTimelineRequest() {
     }
 
-    public OrderTimelineRequest(String orderId) {
-        this.orderId = orderId;
+    public OrderTimelineRequest(String eventName, String orderReference) {
+        this.eventName = eventName;
+        this.orderReference = orderReference;
         validate();
     }
 
@@ -23,17 +33,28 @@ public class OrderTimelineRequest {
      * Validates the request has all required fields.
      */
     public void validate() {
-        if (orderId == null || orderId.isBlank()) {
-            throw EpayClubClientException.requiredField("orderId");
+        if (eventName == null || eventName.isBlank()) {
+            throw EpayClubClientException.requiredField("eventname");
+        }
+        if (orderReference == null || orderReference.isBlank()) {
+            throw EpayClubClientException.requiredField("orderreference");
         }
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getEventName() {
+        return eventName;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public String getOrderReference() {
+        return orderReference;
+    }
+
+    public void setOrderReference(String orderReference) {
+        this.orderReference = orderReference;
     }
 
     public static Builder builder() {
@@ -41,15 +62,21 @@ public class OrderTimelineRequest {
     }
 
     public static class Builder {
-        private String orderId;
+        private String eventName;
+        private String orderReference;
 
-        public Builder orderId(String orderId) {
-            this.orderId = orderId;
+        public Builder eventName(String eventName) {
+            this.eventName = eventName;
+            return this;
+        }
+
+        public Builder orderReference(String orderReference) {
+            this.orderReference = orderReference;
             return this;
         }
 
         public OrderTimelineRequest build() {
-            return new OrderTimelineRequest(orderId);
+            return new OrderTimelineRequest(eventName, orderReference);
         }
     }
 }

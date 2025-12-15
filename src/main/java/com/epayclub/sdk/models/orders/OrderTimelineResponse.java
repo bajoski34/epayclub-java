@@ -12,11 +12,8 @@ public class OrderTimelineResponse {
     @JsonProperty("status")
     private String status;
 
-    @JsonProperty("statusId")
-    private String statusId;
-
-    @JsonProperty("responseCode")
-    private String responseCode;
+    @JsonProperty("statusCode")
+    private String statusCode;
 
     @JsonProperty("message")
     private String message;
@@ -35,20 +32,12 @@ public class OrderTimelineResponse {
         this.status = status;
     }
 
-    public String getStatusId() {
-        return statusId;
+    public String getStatusCode() {
+        return statusCode;
     }
 
-    public void setStatusId(String statusId) {
-        this.statusId = statusId;
-    }
-
-    public String getResponseCode() {
-        return responseCode;
-    }
-
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getMessage() {

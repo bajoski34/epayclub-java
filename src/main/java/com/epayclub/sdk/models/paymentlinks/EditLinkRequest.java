@@ -1,62 +1,73 @@
 package com.epayclub.sdk.models.paymentlinks;
 
-import com.epayclub.sdk.errors.EpayClubClientException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Request model for editing a payment link.
+ * Request model for editing a payment link. Matches expected JSON keys.
  */
 public class EditLinkRequest {
 
-    @JsonProperty("linkId")
-    private String linkId;
+    @JsonProperty("id")
+    private String id;
 
-    @JsonProperty("name")
+    @JsonProperty("Name")
     private String name;
 
-    @JsonProperty("description")
+    @JsonProperty("Description")
     private String description;
 
-    @JsonProperty("amount")
-    private Double amount;
+    @JsonProperty("PaymentType")
+    private String paymentType;
 
-    @JsonProperty("redirectUrl")
-    private String redirectUrl;
+    @JsonProperty("Amount")
+    private String amount;
 
-    @JsonProperty("expiresAt")
-    private String expiresAt;
+    @JsonProperty("Mobile")
+    private String mobile;
 
-    @JsonProperty("metadata")
-    private Object metadata;
+    @JsonProperty("BackgroundImage")
+    private String backgroundImage;
+
+    @JsonProperty("Website")
+    private String website;
+
+    @JsonProperty("AuthOption")
+    private String authOption;
+
+    @JsonProperty("Limit")
+    private String limit;
 
     public EditLinkRequest() {
     }
 
     private EditLinkRequest(Builder builder) {
-        this.linkId = builder.linkId;
+        this.id = builder.id;
         this.name = builder.name;
         this.description = builder.description;
+        this.paymentType = builder.paymentType;
         this.amount = builder.amount;
-        this.redirectUrl = builder.redirectUrl;
-        this.expiresAt = builder.expiresAt;
-        this.metadata = builder.metadata;
+        this.mobile = builder.mobile;
+        this.backgroundImage = builder.backgroundImage;
+        this.website = builder.website;
+        this.authOption = builder.authOption;
+        this.limit = builder.limit;
     }
 
     /**
-     * Validates the request has all required fields.
+     * Validate the request. Currently no required fields are enforced to match
+     * the provided JSON structure. This method is left intentionally empty so
+     * builder.build() can still call it without throwing.
      */
     public void validate() {
-        if (linkId == null || linkId.isBlank()) {
-            throw EpayClubClientException.requiredField("linkId");
-        }
+        // no-op: no required fields defined in the requested JSON structure
     }
 
-    public String getLinkId() {
-        return linkId;
+    public String getId() {
+        return id;
     }
 
-    public void setLinkId(String linkId) {
-        this.linkId = linkId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -75,36 +86,60 @@ public class EditLinkRequest {
         this.description = description;
     }
 
-    public Double getAmount() {
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
-    public String getRedirectUrl() {
-        return redirectUrl;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setRedirectUrl(String redirectUrl) {
-        this.redirectUrl = redirectUrl;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public String getExpiresAt() {
-        return expiresAt;
+    public String getBackgroundImage() {
+        return backgroundImage;
     }
 
-    public void setExpiresAt(String expiresAt) {
-        this.expiresAt = expiresAt;
+    public void setBackgroundImage(String backgroundImage) {
+        this.backgroundImage = backgroundImage;
     }
 
-    public Object getMetadata() {
-        return metadata;
+    public String getWebsite() {
+        return website;
     }
 
-    public void setMetadata(Object metadata) {
-        this.metadata = metadata;
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getAuthOption() {
+        return authOption;
+    }
+
+    public void setAuthOption(String authOption) {
+        this.authOption = authOption;
+    }
+
+    public String getLimit() {
+        return limit;
+    }
+
+    public void setLimit(String limit) {
+        this.limit = limit;
     }
 
     public static Builder builder() {
@@ -112,21 +147,24 @@ public class EditLinkRequest {
     }
 
     public static class Builder {
-        private String linkId;
+        private String id;
         private String name;
         private String description;
-        private Double amount;
-        private String redirectUrl;
-        private String expiresAt;
-        private Object metadata;
-
-        public Builder linkId(String linkId) {
-            this.linkId = linkId;
-            return this;
-        }
+        private String paymentType;
+        private String amount;
+        private String mobile;
+        private String backgroundImage;
+        private String website;
+        private String authOption;
+        private String limit;
 
         public Builder name(String name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder id(String id) {
+            this.id = id;
             return this;
         }
 
@@ -135,23 +173,38 @@ public class EditLinkRequest {
             return this;
         }
 
-        public Builder amount(Double amount) {
+        public Builder paymentType(String paymentType) {
+            this.paymentType = paymentType;
+            return this;
+        }
+
+        public Builder amount(String amount) {
             this.amount = amount;
             return this;
         }
 
-        public Builder redirectUrl(String redirectUrl) {
-            this.redirectUrl = redirectUrl;
+        public Builder mobile(String mobile) {
+            this.mobile = mobile;
             return this;
         }
 
-        public Builder expiresAt(String expiresAt) {
-            this.expiresAt = expiresAt;
+        public Builder backgroundImage(String backgroundImage) {
+            this.backgroundImage = backgroundImage;
             return this;
         }
 
-        public Builder metadata(Object metadata) {
-            this.metadata = metadata;
+        public Builder website(String website) {
+            this.website = website;
+            return this;
+        }
+
+        public Builder authOption(String authOption) {
+            this.authOption = authOption;
+            return this;
+        }
+
+        public Builder limit(String limit) {
+            this.limit = limit;
             return this;
         }
 

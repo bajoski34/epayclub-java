@@ -1,28 +1,68 @@
 package com.epayclub.sdk.models.orders;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Response model for order status check.
+ * Response model for order status check matching the new JSON format.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderStatusResponse {
+
+    @JsonProperty("is_final_status")
+    private boolean isFinalStatus;
+
+    @JsonProperty("requery_needed")
+    private boolean requeryNeeded;
+
+    @JsonProperty("requery_type")
+    private String requeryType;
+
+    @JsonProperty("data")
+    private Data data;
 
     @JsonProperty("status")
     private String status;
 
-    @JsonProperty("statusId")
-    private String statusId;
-
-    @JsonProperty("responseCode")
-    private String responseCode;
+    @JsonProperty("status_code")
+    private String statusCode;
 
     @JsonProperty("message")
     private String message;
 
-    @JsonProperty("data")
-    private OrderStatusData data;
-
     public OrderStatusResponse() {
+    }
+
+    public boolean isFinalStatus() {
+        return isFinalStatus;
+    }
+
+    public void setFinalStatus(boolean finalStatus) {
+        isFinalStatus = finalStatus;
+    }
+
+    public boolean isRequeryNeeded() {
+        return requeryNeeded;
+    }
+
+    public void setRequeryNeeded(boolean requeryNeeded) {
+        this.requeryNeeded = requeryNeeded;
+    }
+
+    public String getRequeryType() {
+        return requeryType;
+    }
+
+    public void setRequeryType(String requeryType) {
+        this.requeryType = requeryType;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
     }
 
     public String getStatus() {
@@ -33,20 +73,12 @@ public class OrderStatusResponse {
         this.status = status;
     }
 
-    public String getStatusId() {
-        return statusId;
+    public String getStatusCode() {
+        return statusCode;
     }
 
-    public void setStatusId(String statusId) {
-        this.statusId = statusId;
-    }
-
-    public String getResponseCode() {
-        return responseCode;
-    }
-
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getMessage() {
@@ -57,61 +89,98 @@ public class OrderStatusResponse {
         this.message = message;
     }
 
-    public OrderStatusData getData() {
-        return data;
-    }
+    public static class Data {
 
-    public void setData(OrderStatusData data) {
-        this.data = data;
-    }
+        @JsonProperty("payment_reference")
+        private String paymentReference;
 
-    public static class OrderStatusData {
-
-        @JsonProperty("orderId")
-        private String orderId;
-
-        @JsonProperty("orderReference")
+        @JsonProperty("order_reference")
         private String orderReference;
 
-        @JsonProperty("orderStatus")
-        private String orderStatus;
+        @JsonProperty("product_id")
+        private Integer productId;
 
-        @JsonProperty("paymentStatus")
-        private String paymentStatus;
+        @JsonProperty("subsidiary_id")
+        private Integer subsidiaryId;
 
-        @JsonProperty("amount")
-        private Double amount;
+        @JsonProperty("wallet_id")
+        private Integer walletId;
 
-        @JsonProperty("currency")
-        private String currency;
+        @JsonProperty("customer_id")
+        private Integer customerId;
 
-        @JsonProperty("email")
-        private String email;
+        @JsonProperty("total_charged_amount")
+        private Long totalChargedAmount;
 
-        @JsonProperty("firstName")
-        private String firstName;
+        @JsonProperty("payment_status")
+        private Integer paymentStatus;
 
-        @JsonProperty("lastName")
-        private String lastName;
+        @JsonProperty("currency_id")
+        private Integer currencyId;
 
-        @JsonProperty("phoneNumber")
-        private String phoneNumber;
+        @JsonProperty("fee")
+        private Long fee;
 
-        @JsonProperty("createdAt")
-        private String createdAt;
+        @JsonProperty("subsidiary_fee")
+        private Long subsidiaryFee;
 
-        @JsonProperty("updatedAt")
-        private String updatedAt;
+        @JsonProperty("customer_fee")
+        private Long customerFee;
 
-        public OrderStatusData() {
+        @JsonProperty("payment_type")
+        private String paymentType;
+
+        @JsonProperty("payment_response_code")
+        private String paymentResponseCode;
+
+        @JsonProperty("payment_response_message")
+        private String paymentResponseMessage;
+
+        @JsonProperty("provider_response_date")
+        private String providerResponseDate;
+
+        @JsonProperty("date_payment_confirmed")
+        private String datePaymentConfirmed;
+
+        @JsonProperty("narration")
+        private String narration;
+
+        @JsonProperty("remarks")
+        private String remarks;
+
+        @JsonProperty("parent_transaction_id")
+        private Integer parentTransactionId;
+
+        @JsonProperty("id")
+        private Integer id;
+
+        @JsonProperty("created_by")
+        private Integer createdBy;
+
+        @JsonProperty("updated_by")
+        private Integer updatedBy;
+
+        @JsonProperty("deleted_by")
+        private Integer deletedBy;
+
+        @JsonProperty("date_created")
+        private String dateCreated;
+
+        @JsonProperty("date_updated")
+        private String dateUpdated;
+
+        @JsonProperty("date_deleted")
+        private String dateDeleted;
+
+        public Data() {
         }
 
-        public String getOrderId() {
-            return orderId;
+        public String getPaymentReference() {
+            return paymentReference;
         }
 
-        public void setOrderId(String orderId) {
-            this.orderId = orderId;
+        public void setPaymentReference(String paymentReference) {
+            this.paymentReference = paymentReference;
         }
 
         public String getOrderReference() {
@@ -122,84 +191,204 @@ public class OrderStatusResponse {
             this.orderReference = orderReference;
         }
 
-        public String getOrderStatus() {
-            return orderStatus;
+        public Integer getProductId() {
+            return productId;
         }
 
-        public void setOrderStatus(String orderStatus) {
-            this.orderStatus = orderStatus;
+        public void setProductId(Integer productId) {
+            this.productId = productId;
         }
 
-        public String getPaymentStatus() {
+        public Integer getSubsidiaryId() {
+            return subsidiaryId;
+        }
+
+        public void setSubsidiaryId(Integer subsidiaryId) {
+            this.subsidiaryId = subsidiaryId;
+        }
+
+        public Integer getWalletId() {
+            return walletId;
+        }
+
+        public void setWalletId(Integer walletId) {
+            this.walletId = walletId;
+        }
+
+        public Integer getCustomerId() {
+            return customerId;
+        }
+
+        public void setCustomerId(Integer customerId) {
+            this.customerId = customerId;
+        }
+
+        public Long getTotalChargedAmount() {
+            return totalChargedAmount;
+        }
+
+        public void setTotalChargedAmount(Long totalChargedAmount) {
+            this.totalChargedAmount = totalChargedAmount;
+        }
+
+        public Integer getPaymentStatus() {
             return paymentStatus;
         }
 
-        public void setPaymentStatus(String paymentStatus) {
+        public void setPaymentStatus(Integer paymentStatus) {
             this.paymentStatus = paymentStatus;
         }
 
-        public Double getAmount() {
-            return amount;
+        public Integer getCurrencyId() {
+            return currencyId;
         }
 
-        public void setAmount(Double amount) {
-            this.amount = amount;
+        public void setCurrencyId(Integer currencyId) {
+            this.currencyId = currencyId;
         }
 
-        public String getCurrency() {
-            return currency;
+        public Long getFee() {
+            return fee;
         }
 
-        public void setCurrency(String currency) {
-            this.currency = currency;
+        public void setFee(Long fee) {
+            this.fee = fee;
         }
 
-        public String getEmail() {
-            return email;
+        public Long getSubsidiaryFee() {
+            return subsidiaryFee;
         }
 
-        public void setEmail(String email) {
-            this.email = email;
+        public void setSubsidiaryFee(Long subsidiaryFee) {
+            this.subsidiaryFee = subsidiaryFee;
         }
 
-        public String getFirstName() {
-            return firstName;
+        public Long getCustomerFee() {
+            return customerFee;
         }
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
+        public void setCustomerFee(Long customerFee) {
+            this.customerFee = customerFee;
         }
 
-        public String getLastName() {
-            return lastName;
+        public String getPaymentType() {
+            return paymentType;
         }
 
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
+        public void setPaymentType(String paymentType) {
+            this.paymentType = paymentType;
         }
 
-        public String getPhoneNumber() {
-            return phoneNumber;
+        public String getPaymentResponseCode() {
+            return paymentResponseCode;
         }
 
-        public void setPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
+        public void setPaymentResponseCode(String paymentResponseCode) {
+            this.paymentResponseCode = paymentResponseCode;
         }
 
-        public String getCreatedAt() {
-            return createdAt;
+        public String getPaymentResponseMessage() {
+            return paymentResponseMessage;
         }
 
-        public void setCreatedAt(String createdAt) {
-            this.createdAt = createdAt;
+        public void setPaymentResponseMessage(String paymentResponseMessage) {
+            this.paymentResponseMessage = paymentResponseMessage;
         }
 
-        public String getUpdatedAt() {
-            return updatedAt;
+        public String getProviderResponseDate() {
+            return providerResponseDate;
         }
 
-        public void setUpdatedAt(String updatedAt) {
-            this.updatedAt = updatedAt;
+        public void setProviderResponseDate(String providerResponseDate) {
+            this.providerResponseDate = providerResponseDate;
+        }
+
+        public String getDatePaymentConfirmed() {
+            return datePaymentConfirmed;
+        }
+
+        public void setDatePaymentConfirmed(String datePaymentConfirmed) {
+            this.datePaymentConfirmed = datePaymentConfirmed;
+        }
+
+        public String getNarration() {
+            return narration;
+        }
+
+        public void setNarration(String narration) {
+            this.narration = narration;
+        }
+
+        public String getRemarks() {
+            return remarks;
+        }
+
+        public void setRemarks(String remarks) {
+            this.remarks = remarks;
+        }
+
+        public Integer getParentTransactionId() {
+            return parentTransactionId;
+        }
+
+        public void setParentTransactionId(Integer parentTransactionId) {
+            this.parentTransactionId = parentTransactionId;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public Integer getCreatedBy() {
+            return createdBy;
+        }
+
+        public void setCreatedBy(Integer createdBy) {
+            this.createdBy = createdBy;
+        }
+
+        public Integer getUpdatedBy() {
+            return updatedBy;
+        }
+
+        public void setUpdatedBy(Integer updatedBy) {
+            this.updatedBy = updatedBy;
+        }
+
+        public Integer getDeletedBy() {
+            return deletedBy;
+        }
+
+        public void setDeletedBy(Integer deletedBy) {
+            this.deletedBy = deletedBy;
+        }
+
+        public String getDateCreated() {
+            return dateCreated;
+        }
+
+        public void setDateCreated(String dateCreated) {
+            this.dateCreated = dateCreated;
+        }
+
+        public String getDateUpdated() {
+            return dateUpdated;
+        }
+
+        public void setDateUpdated(String dateUpdated) {
+            this.dateUpdated = dateUpdated;
+        }
+
+        public String getDateDeleted() {
+            return dateDeleted;
+        }
+
+        public void setDateDeleted(String dateDeleted) {
+            this.dateDeleted = dateDeleted;
         }
     }
 }

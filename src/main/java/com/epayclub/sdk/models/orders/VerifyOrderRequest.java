@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class VerifyOrderRequest {
 
-    @JsonProperty("orderId")
-    private String orderId;
+    @JsonProperty("reference")
+    private String reference;
 
     public VerifyOrderRequest() {
     }
 
-    public VerifyOrderRequest(String orderId) {
-        this.orderId = orderId;
+    public VerifyOrderRequest(String reference) {
+        this.reference = reference;
         validate();
     }
 
@@ -23,17 +23,17 @@ public class VerifyOrderRequest {
      * Validates the request has all required fields.
      */
     public void validate() {
-        if (orderId == null || orderId.isBlank()) {
-            throw EpayClubClientException.requiredField("orderId");
+        if (reference == null || reference.isBlank()) {
+            throw EpayClubClientException.requiredField("reference");
         }
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getReference() {
+        return reference;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public static Builder builder() {
@@ -41,15 +41,15 @@ public class VerifyOrderRequest {
     }
 
     public static class Builder {
-        private String orderId;
+        private String reference;
 
-        public Builder orderId(String orderId) {
-            this.orderId = orderId;
+        public Builder reference(String reference) {
+            this.reference = reference;
             return this;
         }
 
         public VerifyOrderRequest build() {
-            return new VerifyOrderRequest(orderId);
+            return new VerifyOrderRequest(reference);
         }
     }
 }
